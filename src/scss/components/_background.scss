@@ -1,0 +1,12 @@
+.background {
+  z-index: -1;
+  position: fixed;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.pokeball {
+    max-inline-size: 100%;
+    block-size: auto;
+}
