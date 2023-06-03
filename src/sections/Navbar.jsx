@@ -1,9 +1,11 @@
-import Link from 'next/link'
-import pokeballIcon from "../assets/pokeball-icon.png"
-import Image from 'next/image';
+import Link from "next/link";
+import pokeballIcon from "../assets/pokeball-icon.png";
+import Image from "next/image";
 
-import {GiHamburgerMenu} from 'react-icons/gi'
-import { useRouter } from 'next/router';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const router = useRouter();
@@ -11,6 +13,29 @@ export default function Navbar() {
     return router.pathname === pathname;
   };
 
+  const linkList = [
+    {
+      path: "/search",
+      content: "SEARCH",
+    },
+    {
+      path: "/compare",
+      content: "COMPARE",
+    },
+    {
+      path: "pokemon/:id",
+      content: "POKEMON",
+    },
+    {
+      path: "/list",
+      content: "MY LIST",
+    },
+    {
+      path: "/about",
+      content: "ABOUT",
+    },
+  ];
+  const [selectedTab, setSelectedTab] = useState(linkList[0]);
   return (
     <nav>
       <div className="block">
@@ -18,34 +43,23 @@ export default function Navbar() {
       </div>
       <div className="data">
         <>
-          <div className="underline"></div>
-          <Link
-            className={isActive("/search") ? "active-link" : ""}
-            href="/search"
-          >
-            SEARCH
-          </Link>
-          <Link
-            className={isActive("/compare") ? "active-link" : ""}
-            href="/compare"
-          >
-            COMPARE
-          </Link>
-          <Link
-            className={isActive("/pokemon/:id") ? "active-link" : ""}
-            href="/pokemon/:id"
-          >
-            POKEMON
-          </Link>
-          <Link className={isActive("/list") ? "active-link" : ""} href="/list">
-            MY LIST
-          </Link>
-          <Link
-            className={isActive("/about") ? "active-link" : ""}
-            href="/about"
-          >
-            ABOUT
-          </Link>
+          {linkList.map((item) => (
+            <Link
+              key={item.content}
+              className={item.path === selectedTab.path ? "selected" : ""}
+              onClick={() => setSelectedTab(item)}
+              href={item.path}
+            >
+              {item.content}
+              {item.path === selectedTab.path ? (
+                <motion.div
+                  key={item.label}
+                  className="underline"
+                  layoutId="underline"
+                />
+              ) : null}
+            </Link>
+          ))}
         </>
       </div>
       <div className="block">
